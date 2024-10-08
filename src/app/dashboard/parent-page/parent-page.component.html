@@ -1,0 +1,76 @@
+<mat-toolbar color="primary">
+    <span>Vos Enfants</span>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="openAddEditEmpForm()">
+      <mat-icon>add_box</mat-icon>Ajouter vos enfants
+    </button>
+  </mat-toolbar>
+  
+  
+  
+ <div class="main-body " >
+  
+
+ 
+  
+   
+    <table class="table table-bordered">
+      
+       <thead>
+          <tr>
+              
+              <th scope="col">Prénom</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Action</th>
+             
+              <!-- <th scope="col">Note</th>
+              <th scope="col">Remarque</th> -->
+
+          </tr>
+        </thead>
+       <tbody>
+          <tr *ngFor="let item of listEleve ">
+             
+              <td>{{ item.firstName }}</td>
+              <td>{{ item.lastName }}</td>
+             
+              <td> <button (click)="getReglementeleve(item.id)"    class="btn btn-sm btn-success me-2 custom-width"  >
+                           
+                          detail reglement 
+                        </button >
+                         <button (click)="getAbsenceeleve(item.id)"    class="btn btn-sm btn-success me-2 custom-width"  >
+                          detail absence 
+                        </button ></td> 
+
+          </tr>
+       </tbody>
+  </table>
+</div>
+
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+      <div *ngFor="let item of listreglement" class="col-lg-8 col-md-10">
+          <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Mode de paiement :{{ item.modePaiement }}</h5>
+                <h5 class="card-title">Date d'operation :{{ item.operation | date: 'dd/MM/yyyy' }}</h5>
+                <h5 class="card-title">Montant :{{ item.montant }} dt</h5>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="container my-5">
+  <div class="row justify-content-center">
+      <div *ngFor="let item of listabsencebyeleve" class="col-lg-8 col-md-10">
+          <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Absent pour la matiere :{{ item.matiere }}</h5>
+                <h5 class="card-title">Date :{{ item.date | date: 'dd/MM/yyyy' }}</h5>
+               
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

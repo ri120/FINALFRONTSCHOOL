@@ -1,0 +1,55 @@
+<!-- CARD CARD -->
+<div *ngIf="role == 'Eleve'">
+    <h2 class="mb-4 text-center"
+    style="font-size: 36px; font-weight: 600; color: #146de0; text-transform: uppercase; letter-spacing: 1px;">
+    Liste des Notes
+    </h2>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form [formGroup]="FormGroupMatiere">
+                            <div class="row gy-4">
+                                <!-- Matiere Select -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="idMatiere" class="form-label">Selectionnez la matiere</label>
+                                        <select formControlName="idMatiere" name="idMatiere" class="form-control" id="idMatiere" (click)="recupeIdmatiere()">
+                                            <option *ngFor="let mat of this.matiereList" [value]="mat.idMatiere">{{mat.nomMatiere}}</option>
+                                        </select>
+                                       
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+      
+        <thead>
+            <tr>
+                <th scope="col">Examen</th>
+                <th scope="col">Date</th>
+                <th scope="col">Note examen</th>
+                <th scope="col">Remarque</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of NoteListt ">
+                <td>{{ item.examen.numExamen}}</td>
+                <td>{{ item.examen.date| date: 'dd/MM/yyyy'}}</td>
+                <td>{{ item.noteExam}}</td>
+                <td>{{ item.remarque }}</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>

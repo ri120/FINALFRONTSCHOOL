@@ -1,0 +1,152 @@
+<div class="container" id="main-container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <!-- <a class="navbar-brand" href="#"><b>Liste des offres de stage</b></a> -->
+            <h2 class="mb-4 text-center text-primary" style="font-size: 2em">Liste des offres </h2>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOffreModal">
+                Ajouter offre
+              </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- <br>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOffreModal">
+                    <i class="si si-plus"></i> Ajouter
+                </button>
+            </div> -->
+        </div>
+    </nav>
+
+    <div class="col-md-12 justify-content-center">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="col-sm-1">id</th>
+                    <th scope="col" class="col-sm-1">Image</th>
+                    <th scope="col" class="col-sm-2">Titre</th>
+                    <th scope="col" class="col-sm-1">Heures</th>
+                    <th scope="col" class="col-sm-1">Fin</th>
+                    <th scope="col" class="col-sm-1">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let offre of offreList">
+                    <td>{{ offre.id }}</td>
+                    <td data-label="Image"><img alt="image" (error)="changeSource($event)" [src]="offre.offreimg" class="" width="50px"
+                        class="img-fluid"></td>
+                       
+                    <td>{{ offre.titre }}</td>
+                    <td>{{ offre.nbrheuroffre }}</td>
+                    <td>{{ offre.finoffr | date }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button  (click)="getoffre(offre.id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateOffreModal">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteOffre(offre.id)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                          
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal d'ajout d'offre -->
+<div class="modal fade" id="addOffreModal" tabindex="-1" aria-labelledby="addOffreModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addOffreModalLabel">Ajouter une offre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormGroupart">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="titre">Titre</label>
+                                <input type="text" class="form-control" id="titre" formControlName="titre">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="nbrheuroffre">Nombre d'heures</label>
+                                <input type="text" class="form-control" id="nbrheuroffre"
+                                    formControlName="nbrheuroffre">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="finoffr">Date de fin</label>
+                                <input type="date" class="form-control" id="finoffr" formControlName="finoffr">
+                            </div>
+                            <div class="form-group row mb-3 justify-content-center">
+                                <button (click)="fileInput.click()" style="background-color: transparent; border: none;">
+                                    <img (error)="changeSource($event)" [src]="imgUrl" class="rounded-circle" width="100px" height="100px" />
+                                    <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)" formControlName="offreimg" name="offreimg">
+                                </button>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addOffre()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de modification d'offre -->
+<div class="modal fade" id="updateOffreModal" tabindex="-1" aria-labelledby="updateOffreModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateOffreModalLabel">Modifier une offre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormGroupviewupd">
+                    <div class="form-group">
+                        <label for="titre">Titre</label>
+                        <input type="text" class="form-control" id="titr" formControlName="titre">
+                    </div>
+                    <div class="form-group">
+                        <label for="nbrheuroffre">Nombre d'heures</label>
+                        <input type="text" class="form-control" id="nbrheuroffre" formControlName="nbrheuroffre">
+                    </div>
+                    <div class="form-group">
+                        <label for="finoffr">Date de fin</label>
+                        <input type="text" class="form-control" id="finoffr" formControlName="finoffr" [value]="FormGroupviewupd.get('finoffr').value | date">
+                    </div>
+                    <div class="form-group row mb-3 justify-content-center">
+                        <button (click)="fileInput.click()" style="background-color: transparent; border: none;">
+                            <img (error)="changeSource($event)" [src]="imgUrl" class="rounded-circle" width="100px" height="100px" />
+                            <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)" formControlName="offreimg" name="offreimg">
+                        </button>
+                        <small *ngIf="submitted && FormGroupviewupd.get('offreimg')?.invalid" class="text-danger">Image est obligatoire</small>
+                    </div>
+                   <!--  <div class="form-group">
+                        <label for="offreimg">Image</label>
+                        <input type="file" class="form-control" id="offreimg" (change)="onFileSelected($event)">
+                        <img *ngIf="selectedImage" [src]="selectedImage" alt="Aperçu de l'image" class="img-fluid mt-3"
+                            style="max-height: 200px;">
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="updateOffre()">Mettre à jour</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de détails d'offre -->

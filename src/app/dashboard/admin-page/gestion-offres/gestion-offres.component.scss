@@ -1,0 +1,7 @@
+/* CSS global ou spécifique au composant */
+.table img {
+    width: 100px; /* Définir la largeur souhaitée */
+    height: 100px; /* Définir la hauteur souhaitée */
+    object-fit: cover; /* Permet de maintenir le ratio d'aspect de l'image */
+  }
+  

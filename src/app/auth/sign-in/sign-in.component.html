@@ -1,0 +1,65 @@
+<div class="login-bg position-fixed top-0 start-0 end-0 bottom-0"
+	style="background-image: url(assets/images/gallery/login-bg.png);">
+</div>
+
+
+<div class="auth-box d-flex align-items-center justify-content-center my-2 my-lg-0">
+ <div class="container-fluid">
+	<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+		<form [formGroup]="loginForm" (ngSubmit)="login()" #signInNgForm="ngForm" class="col mx-auto">
+			<mat-card class="rounded-4 m-1">
+				<mat-card-content class="p-5">
+					<div class="text-center">
+						<img style="margin-top: -30px;" src="../../../assets/images/logo/mastergo.png"
+							 width="300" height="200" alt="">
+						<h4 class="mb-2" style="margin-top: -50px;">Se connecter</h4>
+						<p class="mb-4">Veuillez vous connecter à votre compte</p>
+						<div *ngIf="showAlert && !loginForm.get('email').touched" class="alert alert-danger d-flex align-items-center"  role="alert">
+							<mat-icon class="pe-3">warning</mat-icon>{{message}}
+						  </div>
+					</div>
+					<div class="row g-1">
+						<div class="col-12 col-md-12">
+							<mat-form-field class="w-100 mb-0" appearance="outline">
+								<mat-label>Entrez votre  Email</mat-label>
+								<input matInput placeholder="Ex. xyz@.com" formControlName="email" >
+								<mat-icon matSuffix>email</mat-icon>
+							</mat-form-field>
+							<p  *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched" class="message-erreur">
+								*Veuillez saisir votre adresse e-mail
+							  </p>
+						</div>
+						<div class="col-12 col-md-12">
+							<mat-form-field class="w-100 mb-0" appearance="outline">
+								<mat-label>Entrez votre mot de passe</mat-label>
+								<input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+								<button mat-icon-button matSuffix (click)="hide = !hide"
+									[attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+									<mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+								</button>
+							</mat-form-field>
+							<p class="text-danger" *ngIf="loginForm.get('password').errors?.['required'] && loginForm.get('password').touched" ngClass="message-erreur">
+								*Veuillez saisir votre mot de passe
+							  </p>
+						</div>
+						<div class="col-12 col-md-12 mb-3 text-end">
+								<a style="cursor: pointer; color: #1414f8;" routerLink="/auth/forgot-password">Mot de passe oublié ?</a>
+						</div>
+						<div class="col-12 col-md-12 mb-3">
+							<div class="d-grid">
+								<button mat-flat-button color="primary" type="submit">Se connecter</button>
+							</div>
+						</div>
+						<div class="col-12 col-md-12">
+							<div class="text-center">
+								<p>Vous n'avez pas de compte ? <a routerLink="../sign-up"
+										style="cursor: pointer; color: #1414f8;">Créez un nouveau compte</a></p>
+							</div>
+						</div>
+					</div><!--end row-->
+				</mat-card-content>
+			</mat-card>
+		</form>
+	</div>
+ </div>
+</div>

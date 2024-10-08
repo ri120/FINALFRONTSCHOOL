@@ -1,0 +1,331 @@
+<!-- classes.component.html -->
+
+
+<!-- Button trigger modal -->
+<h2 class="mb-4 text-center text-primary" style="font-size: 2em">Liste des classes</h2>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Ajouter classe
+  </button>
+  
+    
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un classe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+        
+            <form [formGroup]="FormGroupart" >
+                <div class="row">
+                     
+                   
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Titre *</label>
+                            <input
+                                class="form-control"
+                                id="titre"
+                                required
+                                formControlName="titre"
+                                name="titre"
+                                type="text"
+                                placeholder="titre"/>
+                            <small *ngIf="submitted && FormGroupart.get('titre')?.invalid" class="text-danger">titre est obligatoire</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Année scolaire *</label>
+                            <input
+                                class="form-control"
+                                id="annescolair"
+                                required
+                                formControlName="annescolair"
+                                name="annescolair"
+                                type="annescolairl"
+                                placeholder="Annee scolaire"/>
+                            <small *ngIf="submitted && FormGroupart.get('annescolair')?.invalid" class="text-danger">Année scolaire est obligatoire</small>
+                        </div>
+                    </div>
+    
+                  
+    
+    
+                
+            </div>
+             
+            </form>
+
+
+            
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button (click)="addClasse()"  type="button" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<!-- Modal modifier -->
+  <div class="modal fade" id="exampleModalmodifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modifier le classe </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        
+            <form  >
+                <div class="row">
+                     
+                   
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Titre *</label>
+                            <input
+                                class="form-control"
+                                id="titre"
+                                required
+                                formControlName="titre"
+                                name="titre"
+                                type="text"
+                                placeholder="titre"/>
+                            <small *ngIf="submitted && FormGroupart.get('titre')?.invalid" class="text-danger">titre est obligatoire</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Année scolaire *</label>
+                            <input
+                                class="form-control"
+                                id="annescolair"
+                                required
+                                formControlName="annescolair"
+                                name="annescolair"
+                                type="annescolairl"
+                                placeholder="Année scolaire"/>
+                            <small *ngIf="submitted && FormGroupart.get('annescolair')?.invalid" class="text-danger">Année scolaire est obligatoire</small>
+                        </div>
+                    </div>
+    
+                  
+    
+    
+                
+            </div>
+             
+            </form>
+
+
+      
+
+
+        </div>
+        <div class="modal-footer">
+          <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button (click)="updateClasse()"  type="button" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container mt-4">
+    
+
+    <!-- Affichage de la liste des classes -->
+    <div class="row">
+        
+          
+        <table class="eg-table order-table table mb-0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Année Scolaire</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of classeList " >
+                    <td data-label="id ">{{item.id}} </td>
+                    <td data-label="titre">{{item.titre}}</td>
+                    <td data-label="annescolair ">{{item.annescolair}}</td>
+                    <td data-label="Action">
+                       
+                       
+                        <button (click)="getclass(item.id)"    class="btn btn-sm btn-success me-2 custom-width"  data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">
+                           
+                          Modifier
+                        </button >
+                        <button (click)="deleteClasee(item.id)"   class="btn btn-sm btn-danger me-2 custom-width">
+                        Supprimer
+                        </button >
+                        <button   class="btn btn-sm btn-primary me-2 custom-width" data-bs-toggle="modal" data-bs-target="#exampleModalAffecter"
+                        (click)="getId(item.id)">
+                            + eleve
+                            </button >
+                            <button   class="btn btn-sm btn-info custom-width" data-bs-toggle="modal" data-bs-target="#exampleModalEleve"
+                            (click)="getListEleveByClasse(item.id)">
+                               liste Eleves
+                                </button >
+          
+                    </td>
+                </tr>
+           
+             
+               
+            </tbody>
+        </table>
+            <!-- <mat-card class="mb-3">
+                <mat-card-header>
+                    <mat-card-title>{{ classe.titre }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Année scolaire: {{ classe.annescolair }}</p>
+                    Ajoutez d'autres détails si nécessaire 
+                    <div class="btn-group">
+                        <button mat-raised-button color="primary" (click)="selectClass(classe)">Modifier</button>
+                        <button mat-raised-button color="warn" (click)="deleteClass(classe.id)">Supprimer</button>
+                    </div>
+                </mat-card-content>
+            </mat-card> -->
+
+
+
+
+
+        
+    </div>
+
+ 
+</div>
+<div class="modal fade" id="exampleModalEleve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Afficher la liste des Élèves</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Email</th>
+              <th scope="col">Tél</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of eleveListClasse">
+              <td>{{ item.id }}</td>
+              <td>{{ item.firstName }}</td>
+              <td>{{ item.lastName }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.phone }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+   <!-- madal affecter -->
+   <div class="modal fade" id="exampleModalE" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Affecter eleve au classe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+     <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Email</th>
+              <th scope="col">Tél</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of eleveListClasse ">
+              <td>{{ item.id}}</td>
+              <td>{{ item.firstName }}</td>
+              <td>{{ item.lastName }}</td>
+              <td>{{ item.email}}</td>
+              <td>{{ item.phone }}</td>
+              
+          </tr>
+      </tbody>
+  </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModalAffecter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Ajouter la classe modal-lg -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter une classe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <div style="display: flex; justify-content: flex-end; margin: 20px;">
+            <select class="form-select" aria-label="Default select example" id="level-select" (change)="getStudentByNiv($event)" style="margin-left: 23cm;">
+              <option *ngFor="let level of niveauScolaires" [value]="level" [selected]="selected==level">{{level}}</option>
+            </select>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tél</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ElevesClasses">
+                <td>{{ item.id }}</td>
+                <td>{{ item.firstName }}</td>
+                <td>{{ item.lastName }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.phone }}</td>
+                <td>
+                  <div class="d-flex">
+                    <button class="btn btn-sm btn-info custom-width" data-bs-target="#exampleModal" (click)="AffecterElev(item.id)">Affecter</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>

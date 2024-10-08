@@ -1,0 +1,39 @@
+<div class="text-center">
+    <h5 class="mb-0 text-green fs-1 fw-bold font-monospace ">Calendrier  scolaire</h5>
+    <hr/>
+</div>
+<div style="width: 70%; margin: 0 auto;">
+
+            
+            <table mat-table [dataSource]="dataSource">
+                
+                <!-- Name Column -->
+                <ng-container matColumnDef="vancance" sticky >
+                    <th mat-header-cell *matHeaderCellDef style="background-color: rgb(195, 234, 22);"> Vacances scolaires / jours fériés </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef style="background-color: rgb(195, 234, 22);">Durée / Date(s) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+                
+                
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            
+            
+        </div>
+            
+            
+            <div class="mt-4 d-flex justify-content-center">
+                
+                <img src="assets/images/calendrier/calendrier-scolaire-2023-2024-Elites-1-1024x724.png" class="img-fluid rounded-4" alt="">
+            </div>
+            
+            
+            
+            

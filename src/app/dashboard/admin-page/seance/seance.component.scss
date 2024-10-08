@@ -1,0 +1,43 @@
+.emploi-temps-container {
+    margin: 20px;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(6, 1fr); /* 1 colonne pour les heures, 6 colonnes pour les jours */
+    gap: 5px;
+  }
+  
+  .grid-header {
+    display: contents;
+  }
+  
+  .grid-row {
+    display: contents;
+  }
+  
+  .grid-cell {
+    padding: 15px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .grid-cell:first-child {
+    font-weight: bold;
+    background-color: #f4f4f4;
+  }
+  
+  .emploi-details {
+    background-color: #f0f8ff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .empty-slot {
+    color: #ccc;
+  }
+  .table {
+    width: 100%;
+    text-align: left;
+  }

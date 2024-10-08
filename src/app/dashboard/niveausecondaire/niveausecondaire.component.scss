@@ -1,0 +1,25 @@
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+
+  .example-tab-icon {
+    margin-right: 8px;
+  }
+  ::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.mat-mdc-tab-group, .mat-mdc-tab-nav-bar{
+  --mat-tab-header-active-focus-label-text-color: #f82121;
+  --mat-tab-header-active-label-text-color : #d72424;
+  --mat-tab-header-inactive-label-text-color: rgb(0 0 0 / 60%);
+  --mat-tab-header-inactive-focus-label-text-color: rgb(236 131 218 / 60%);
+  --mat-tab-header-inactive-hover-label-text-color : rgb(236 131 218 / 60%);
+  --mdc-tab-indicator-active-indicator-color: #242022;
+  --mat-tab-header-active-hover-label-text-color: #5052c3;
+  --mat-tab-header-active-ripple-color: #18c21b;
+  --mat-tab-header-active-focus-ripple-color: #18c21b;
+  --mat-tab-header-inactive-ripple-color: #232222;
+  --mat-tab-header-active-label-text-color: #cc1b1b;
+}
+

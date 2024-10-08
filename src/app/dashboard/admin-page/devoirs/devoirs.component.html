@@ -1,0 +1,199 @@
+<!-- classes.component.html -->
+<div class="container mt-5"></div>
+    <div *ngIf="role == 'professeur'">
+    
+    <h2 class="mb-4 text-center text-primary" style="font-size: 2em;">Uploader un Fichier devoir à la maison</h2>
+    <form [formGroup]="devoirForm" (ngSubmit)="onSubmit()" class="p-4 rounded shadow bg-light border border-primary">
+        <div class="form-group">
+            <label for="dateDevoir" class="text-primary" style="font-size: 1.2em;">Date de devoir :*</label>
+            <input type="date" id="dateDevoir" class="form-control" formControlName="dateDevoir" required>
+            <small *ngIf="submitted && devoirForm.get('dateDevoir')?.invalid" class="text-danger">Date est obligatoire</small>
+        </div>
+       
+        <div class="form-inner">
+            <label for="matiereId" class="text-primary" style="font-size: 1.2em;">Matiere:*</label>
+            <select type="text" formControlName="matiereId" name="matiereId" class="form-control"
+                id="matiereId">
+                <option value=-1 disabled checked>selectionner</option>
+                <option *ngFor="let item of matiereList" [value]="item.idMatiere">
+                    {{item.nomMatiere}}</option>
+            </select>
+            <small *ngIf="submitted && devoirForm.get('matiereId')?.invalid"
+                class="text-danger">matiere est obligatoire</small>
+        </div>
+
+        <br>
+        
+
+        <div class="form-group">        
+            <p-multiSelect [options]="classeList" formControlName="classesId" 
+              name="classesId" defaultLabel="classe" class="form-control"></p-multiSelect>
+          </div>
+       
+     
+        <div class="form-group row mb-3 justify-content-center">
+            <button (click)="fileInput.click()" style="background-color: transparent; border: none;">
+                <img (error)="changeSource($event)" [src]="imgUrl" class="rounded-circle" width="100px" height="100px" />
+                <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)" formControlName="tache" name="tache">
+            </button>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary btn-block"
+            style="background-color: #e05a29; border-color: #e05a29; font-size: 1.2em;" (click)="saveDevoir()">Uploader</button>
+    </form>
+</div>
+<div>
+
+
+
+
+
+<div *ngIf="role == 'Parent'|| role == 'Eleve'">
+    <h2 class="mt-5 mb-4 text-center text-primary" style="font-size: 2em;">Liste Travaux à la maison</h2>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
+        integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
+        integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+
+
+   
+
+
+
+
+
+<!-- CARD CARD -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form [formGroup]="FormGroupClassMatiere">
+                        <div class="row gy-4">
+                            <!-- Classe Select -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="idclasse" class="form-label">Classe *</label>
+                                    <select formControlName="idclasse" name="idclasse" class="form-control" id="idclasse" (click)="recupeIdclasseIdmatiere()">
+                                        <option value=-1 disabled checked>Selectionner</option>
+                                        <option *ngFor="let classt of this.classeListt" [value]="classt.id">{{classt.titre}}</option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupClassMatiere.get('idclasse')?.invalid" class="text-danger">La classe est obligatoire</small>
+                                </div>
+                            </div>
+
+                            <!-- Matiere Select -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="idMatiere" class="form-label">Matière *</label>
+                                    <select formControlName="idMatiere" name="idMatiere" class="form-control" id="idMatiere" (click)="recupeIdclasseIdmatiere()">
+                                        <option value=-1 disabled checked>Selectionner</option>
+                                        <option *ngFor="let mat of this.matiereList" [value]="mat.idMatiere">{{mat.nomMatiere}}</option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupClassMatiere.get('idMatiere')?.invalid" class="text-danger">La matière est obligatoire</small>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!-- CARD CARD -->
+ <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <!-- Titre du cadre -->
+                    <h3 class="text-center text-primary mb-4">Liste des Devoirs</h3>
+
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-6">
+                            <!-- Place for future content -->
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Another place for content if needed -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Parcourir les devoirs et les afficher dans des cartes stylées -->
+                        <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let dev of devoirsListt">
+                            <div class="card h-100 border-primary">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-1 ms-3">
+                                            <h5 class="font-size-16 mb-1">
+                                                <a href="#" class="text-dark">{{dev.titre}}</a>
+                                            </h5>
+                                            <span class="badge badge-soft-success mb-0">Full Stack Developer</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 pt-1">
+                                        <p class="text-muted mb-0">
+                                            <i class="mdi mdi-clock font-size-15 align-middle pe-2 text-primary"></i>
+                                            {{dev.dateDevoir | date: 'dd/MM/yyyy'}}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex gap-2 pt-4">
+                                        <!-- <button type="button" class="btn btn-primary btn-sm w-100" (click)="getbyidviewpdf(dev.idDevoir)"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModalviewpdf">
+                                            <i class="mdi mdi-application-import" 
+                                             ></i> Voir le PDF
+                                        </button> -->
+                                        <button class="btn"><i class="fa fa-download"> </i> <a [href]="dev.tache">download</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- Fin du row des devoirs -->
+                    
+                </div> <!-- Fin du card-body -->
+            </div> <!-- Fin du card principal -->
+        </div> <!-- Fin de la colonne principale -->
+    </div> <!-- Fin du row principal -->
+</div> <!-- Fin du container -->
+
+
+</div>
+
+    <!-- Modal modifier -->
+    <div class="modal fade" id="exampleModalviewpdf" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">courier depart </h5>
+                    
+                  
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   
+                    <!-- <ngx-extended-pdf-viewer [src]="urldoc" useBrowserLocale="true" height="80vh"></ngx-extended-pdf-viewer> -->
+
+                    <pdf-viewer [src]="urldoc" [render-text]="true"
+                    (after-load-complete)="onLoaded($event)" 
+                    [original-size]="false"
+                        style="width: 800px; height: 700px ;margin: auto;"></pdf-viewer>
+                        
+
+                 </div>
+                
+                <!-- <div class="modal-footer">
+                    <button (click)="print()" class="btn btn-sm btn-success" [disabled]="!isPdfLoaded">Print</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

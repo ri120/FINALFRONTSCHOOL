@@ -1,0 +1,277 @@
+
+<!-- classes.component.html -->
+
+
+<!-- Button trigger modal -->
+<h2 class="mb-4 text-center text-primary" style="font-size: 3em">Liste des slotes</h2>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Ajouter slot
+  </button>
+ 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un Nouveau slot </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           
+          
+            <form [formGroup]="FormGroupart" >
+                <div class="row">
+                     
+                   
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Temps de debut *</label>
+                            <input
+                                class="form-control"
+                                id="timestart"
+                                required
+                                formControlName="timestart"
+                                name="timestart"
+                                type="time"
+                                placeholder="Temps de debut"/>
+                            <small *ngIf="submitted && FormGroupart.get('timestart')?.invalid" class="text-danger">titre est obligatoire</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Temps de fin*</label>
+                            <input
+                                class="form-control"
+                                id="timeend"
+                                required
+                                formControlName="timeend"
+                                name="timeend"
+                                type="time"
+                                placeholder="Temps de fin"/>
+                            <small *ngIf="submitted && FormGroupart.get('timeend')?.invalid" class="text-danger">timeend</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>jour*</label>
+                                <select class="form-control" formControlName="jour" id="jour">
+                                    <option value="">Sélectionnez un jour</option>
+                                    <option value="Lundi">Lundi</option>
+                                    <option value="Mardi">Mardi</option>
+                                    <option value="Mercredi">Mercredi</option>
+                                    <option value="Jeudi">Jeudi</option>
+                                    <option value="Vendredi">Vendredi</option>
+                                    <option value="Samedi">Samedi</option>
+                                  </select>
+                         <small *ngIf="submitted && FormGroupart.get('jour')?.invalid" class="text-danger">jour</small> 
+                        </div>
+                    </div>
+                  
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Années scolaire*</label>
+                            <input
+                                class="form-control"
+                                id="anneescolair"
+                                required
+                                formControlName="anneescolair"
+                                name="anneescolair"
+                                type="text"
+                                placeholder="années scolaire"/>
+                            <small *ngIf="submitted && FormGroupart.get('anneescolair')?.invalid" class="text-danger">jour</small>
+                        </div>
+                    </div>
+                    
+                
+            </div>
+             
+            </form>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button (click)="updateClasse()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button (click)="addClasse()"  type="button" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<!-- Modal modifier -->
+  <div class="modal fade" id="exampleModalmodifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modifier le slot</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        
+            <form [formGroup]="FormGroupviewupd" >
+                <div class="row">
+                     
+                   
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Temps de debut *</label>
+                            <input
+                                class="form-control"
+                                id="timestart"
+                                required
+                                formControlName="timestart"
+                                name="timestart"
+                                type="text"
+                                placeholder="Temps de debut"/>
+                            <small *ngIf="submitted && FormGroupart.get('timestart')?.invalid" class="text-danger">titre est obligatoire</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>Temps de Fin *</label>
+                            <input
+                                class="form-control"
+                                id="timeend"
+                                required
+                                formControlName="timeend"
+                                name="timeend"
+                                type="timeend"
+                                placeholder="Temps de fin"/>
+                            <small *ngIf="submitted && FormGroupart.get('timeend')?.invalid" class="text-danger">timeend</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <!-- <label>jour*</label>
+                            <input
+                                class="form-control"
+                                id="jour"
+                                required
+                                formControlName="jour"
+                                name="jour"
+                                type="text"
+                                placeholder="jour"/>
+                            <small *ngIf="submitted && FormGroupart.get('jour')?.invalid" class="text-danger">jour</small> -->
+                            <label>jour*</label>
+                            <select class="form-control" formControlName="jour" id="jour">
+                                <option value="">Sélectionnez un jour</option>
+                                <option value="Lundi">Lundi</option>
+                                <option value="Mardi">Mardi</option>
+                                <option value="Mercredi">Mercredi</option>
+                                <option value="Jeudi">Jeudi</option>
+                                <option value="Vendredi">Vendredi</option>
+                                <option value="Samedi">Samedi</option>
+                              </select>
+                              <small *ngIf="submitted && FormGroupart.get('jour')?.invalid" class="text-danger">jour</small>
+                        </div>
+                    </div>
+                  
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-inner">
+                            <label>années scolaire*</label>
+                            <input
+                                class="form-control"
+                                id="anneescolair"
+                                required
+                                formControlName="anneescolair"
+                                name="anneescolair"
+                                type="text"
+                                placeholder="années scolaire"/>
+                            <small *ngIf="submitted && FormGroupart.get('anneescolair')?.invalid" class="text-danger">jour</small>
+                        </div>
+                    </div>
+                    
+                
+            </div>
+             
+             
+            </form>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button (click)="updateClasse()"  type="button" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container mt-4">
+ 
+    
+    <!-- Affichage de la liste des classes -->
+    <div class="row">
+        
+          
+        <table class="eg-table order-table table mb-0">
+            <thead>
+                <tr>
+                    <th>Temps de debut</th>
+                    <th>Temps de fin</th>
+                    <th>jour</th>
+                    <th>Année Scolaire</th>
+                    <th>action</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of slotList " >
+                    <td data-label="timestart ">{{item.timestart}} </td>
+                    <td data-label="timeend">{{item.timeend}}</td>
+                    <td data-label="jour ">{{item.jour}} </td>
+                    <td data-label="anneescolair">{{item.anneescolair}}</td>
+                    <td data-label="Action">
+                       
+                        
+                       
+                        <!-- <button (click)="getclass(item.id)"    class="btn-info text-light ms-1"  data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">
+                            <i class="fas fa-edit"></i>
+                            <br>
+                        </button >
+                        <button (click)="deleteClasee(item.id)"   class="btn-danger text-light ms-1">
+                            <i class="fas fa-trash-alt"></i>
+                        </button > -->
+                        <button (click)="getslot(item.id)"    class="btn btn-sm btn-success me-2 custom-width"  data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">
+                           
+                            Modifier
+                          </button >
+                          <button (click)="deleteSlot(item.id)"   class="btn btn-sm btn-danger me-2 custom-width">
+                          Supprimer
+                          </button >
+                          
+                        
+                       
+                    </td>
+                </tr>
+           
+             
+               
+            </tbody>
+        </table>
+            <!-- <mat-card class="mb-3">
+                <mat-card-header>
+                    <mat-card-title>{{ classe.titre }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Année scolaire: {{ classe.annescolair }}</p>
+                    Ajoutez d'autres détails si nécessaire 
+                    <div class="btn-group">
+                        <button mat-raised-button color="primary" (click)="selectClass(classe)">Modifier</button>
+                        <button mat-raised-button color="warn" (click)="deleteClass(classe.id)">Supprimer</button>
+                    </div>
+                </mat-card-content>
+            </mat-card> -->
+        
+    </div>
+
+ 
+</div>

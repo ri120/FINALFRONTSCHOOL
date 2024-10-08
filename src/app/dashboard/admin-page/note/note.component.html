@@ -1,0 +1,200 @@
+
+
+
+<div *ngIf="role == 'professeur'" >
+    <h2 class="mb-4 text-center"
+style="font-size: 36px; font-weight: 600; color: #146de0; text-transform: uppercase; letter-spacing: 1px;">
+Gestion des Notes
+</h2>
+    <div class="container mt-1">
+       
+    
+        <div style="display: flex; justify-content: flex-end; margin: 20px;">
+           
+            <select class="form-select" aria-label="Default select example" id="level-select"
+                (change)="onClassChange($event)" style="margin-left: 23cm;">
+                <option [value]="null" disabled selected>Choisissez un examen</option>
+                <option *ngFor="let exam of this.examens" [value]="exam.idExamen">{{ exam.numExamen }}</option>
+            </select>
+    
+        </div>
+    
+    
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ClasseExams">
+                    <td>{{ item.titre}}</td>
+                    <td>
+                        <div class="d-flex">
+    
+                            <button class="btn btn-sm btn-info custom-width" (click)="getElevByClasse(item.id)">
+                                Eleves</button>
+    
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+    
+        <div class="card">
+            <div class="card-header">
+                Liste des élèves
+           
+               <button class="btn btn-sm btn-primary custom-width" data-bs-toggle="modal"
+                                        data-bs-target="#examptable" style="margin-left: 25cm;" (click)="getListNote()">detail</button>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Nom</th>
+    
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listEleve ">
+                            <td>{{ item.id}}</td>
+                            <td>{{ item.firstName }}</td>
+                            <td>{{ item.lastName }}</td>
+                            <td>
+                                <div class="d-flex">
+    
+                                    <button class="btn btn-sm btn-success me-4 custom-width" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" (click)="RecuperationIdEleve(item.id)">+note</button>
+                                    
+    
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+        </div>
+    
+    </div>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">+note </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+    
+                    <form [formGroup]="noteForm">
+                        <div class="row">
+    
+    
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Note examen: *</label>
+                                    <input class="form-control" id="noteExam" required formControlName="noteExam"
+                                        name="noteExam" type="text" placeholder="note examen" />
+                                    <small *ngIf="submitted && noteForm.get('noteExam')?.invalid" class="text-danger">le
+                                        numero examen est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Remarque: *</label>
+                                    <input class="form-control" id="remarque" required formControlName="remarque"
+                                        name="remarque" type="text" placeholder="Remarque" />
+                                    <small *ngIf="submitted && noteForm.get('remarque')?.invalid" class="text-danger">la
+                                        date scolaire est obligatoire</small>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </form>
+    
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" (click)="saveNote()">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="examptable" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">liste des notes</h5>
+                </div>
+                    <div class="modal-body">
+    
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Prénom</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Note</th>
+                                    <th scope="col">Remarque</th>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of NoteListByExam ">
+                                    <td>{{ item.idNote}}</td>
+                                    <td>{{ item.eleve.firstName }}</td>
+                                    <td>{{ item.eleve.lastName }}</td>
+                                    <td>{{ item.noteExam }}</td>
+                                    <td>{{ item.remarque }}</td>
+    
+                                </tr>
+                            </tbody>
+                        </table>
+    
+    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+    
+              
+            </div>        
+        </div> 
+    </div>       
+
+</div>
+
+
+
+
+ <!-- CARD CARD -->
+ <!-- <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Examen</th>
+            <th scope="col">Date</th>
+            <th scope="col">Note examen</th>
+            <th scope="col">Remarque</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of NoteListt ">
+            <td>{{ item.examen.numExamen}}</td>
+            <td>{{ item.examen.date| date: 'dd/MM/yyyy'}}</td>
+            <td>{{ item.noteExam}}</td>
+            <td>{{ item.remarque }}</td>
+           
+
+        </tr>
+    </tbody>
+</table> -->

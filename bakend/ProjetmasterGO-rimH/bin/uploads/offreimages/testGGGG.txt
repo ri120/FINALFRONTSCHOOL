@@ -1,0 +1,357 @@
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PDFDocumentProxy } from 'ng2-pdf-viewer';
+import { CourirtDepart } from 'src/app/models/courirt-depart';
+import { CourirtDepartService } from 'src/app/services/courirt-depart.service';
+
+@Component({
+  selector: 'app-view-courirt-depart',
+  templateUrl: './view-courirt-depart.component.html',
+  styleUrl: './view-courirt-depart.component.scss'
+})
+export class ViewCourirtDepartComponent {
+  
+  FormGroupviewupd!: FormGroup
+  classeList: CourirtDepart[] = [];
+ 
+  modelclass: CourirtDepart = new CourirtDepart();
+  viewmodelclass: CourirtDepart = new CourirtDepart();
+
+  imgUrl: string | ArrayBuffer = 'assets/img/post-3.jpg'
+  //| ArrayBuffer = 'assets/img/avatar.png'
+  file!: File;
+  urldoc: string
+  urlfile: string
+
+  constructor(private classservice: CourirtDepartService) { }
+  isPdfLoaded = false;
+  private pdf: PDFDocumentProxy;
+
+  onLoaded(pdf: PDFDocumentProxy) {
+    this.pdf = pdf;
+    this.isPdfLoaded = true;
+  }
+  ngOnInit(): void {
+
+    this.getListClasse()
+    
+    this.FormGroupviewupd = new FormGroup({
+      //'idarticle' : new FormControl('', Validators.reNumber(localStorage.getItem("userId"))quired),
+      'ref': new FormControl('', Validators.required),
+      'objet': new FormControl('', Validators.required),
+      'contenu': new FormControl(''),
+      'dateenvoi': new FormControl('', Validators.required),
+     // 'dateajout': new FormControl(new Date(), Validators.required),
+      'destinataire': new FormControl('', Validators.required),
+      'motscle': new FormControl('', Validators.required),
+      'observation': new FormControl('', Validators.required),
+
+
+
+
+    });
+  }
+
+  geturl(urldocs: string) {
+    this.urldoc
+  }
+
+ 
+
+
+  ///modifier
+ 
+
+  ///////////////////////////
+
+  getListClasse() {
+    this.classservice.getAlltable().subscribe(res => {
+      this.classeList = res
+      console.log(res)
+
+    }, error => {
+      console.error(error)
+    }, () => {
+
+    })
+  }
+  getbyid(id: number) {
+    this.classservice.getfildsById(id).subscribe(res => {
+      this.viewmodelclass = res
+      console.log(res)
+    }, error => {
+      console.error(error)
+    }, () => {
+
+    })
+  }
+  getbyidviewpdf(id: number) {
+    this.classservice.getfildsById(id).subscribe(res => {
+      this.viewmodelclass = res
+      console.log(res)
+      this.urldoc = res.contenu
+    }, error => {
+      console.error(error)
+    }, () => {
+
+    })
+  }
+
+
+
+  
+  ////ng2-pdf-viewer
+
+  getclass(id: number) {
+
+    if (id != undefined && id != null) {
+      this.classservice.getfildsById(id).subscribe(
+        res => {
+          console.log(res);
+          this.viewmodelclass = res
+          this.urlfile=res.contenu.substring(62)
+  
+          this.getbyidviewpdf(id)
+console.log("eeeeeeeeee",this.viewmodelclass)
+
+        }, error => {
+          console.error(error)
+        }, () => {
+          this.FormGroupviewupd.get("ref")?.setValue(this.viewmodelclass.ref);
+          this.FormGroupviewupd.get("objet")?.setValue(this.viewmodelclass.objet);
+          this.FormGroupviewupd.get("contenu")?.setValue(this.file);
+         this.FormGroupviewupd.get("dateenvoi")?.setValue(this.viewmodelclass.dateenvoi)
+          this.FormGroupviewupd.get("dateajout")?.setValue(this.viewmodelclass.dateajout);
+          this.FormGroupviewupd.get("destinataire")?.setValue(this.viewmodelclass.destinataire);
+          this.FormGroupviewupd.get("motscle")?.setValue(this.viewmodelclass.motscle);
+         this.FormGroupviewupd.get("observation")?.setValue(this.viewmodelclass.observation); 
+          this.FormGroupviewupd.updateValueAndValidity()
+        });
+    }
+  }
+
+  ////
+  print() {
+    this.pdf.getData().then((u8) => {
+        let blob = new Blob([u8.buffer], {
+            type: 'application/pdf'
+        });
+
+        const blobUrl = window.URL.createObjectURL((blob));
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = blobUrl;
+        document.body.appendChild(iframe);
+        iframe.contentWindow.print();
+    });
+  }
+
+  
+
+  onFileInput(files: FileList | null): void {
+    // alert("1" + JSON.stringify(files))
+    if (files) {
+      //  alert("2" + JSON.stringify(files))
+      this.file = files.item(0) as File;
+      if (this.file) {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(this.file);
+       this.urlfile=this.file.name
+        fileReader.onload = (event) => {
+          if (fileReader.result) {
+            this.imgUrl = fileReader.result;
+          }
+        };
+      }
+    }
+  }
+  changeSource(event: any) {
+    event.target.src = "assets/img/post-3.jpg";
+
+  }
+
+
+
+
+}
+////////////////////////
+
+<!-- Button trigger modal -->
+<h2 class="mb-4 text-center text-primary" style="font-size: 2em">Liste des courier</h2>
+
+<!-- Modal modifier -->
+<div class="modal fade" id="exampleModalmodifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier le classe </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="FormGroupviewupd">
+                    <div class="row">
+
+
+
+
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-inner">
+                                <label>ref *</label>
+                                <input class="form-control" id="ref" required formControlName="ref" name="ref"
+                                    type="text" placeholder="ref" />
+                                <small *ngIf="FormGroupviewupd.get('ref')?.invalid"
+                                    class="text-danger">titre est obligatoire</small>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-inner">
+                                <label>objet *</label>
+                                <input class="form-control" id="objet" required formControlName="objet" name="objet"
+                                    type="text" placeholder="objet" />
+                                <small *ngIf=" FormGroupviewupd.get('objet')?.invalid"
+                                    class="text-danger"></small>
+                            </div>
+                        </div>
+                       
+
+
+
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-inner">
+                                <label>dateenvoi *</label>
+                                <input class="form-control" id="dateenvoi" required formControlName="dateenvoi"
+                                    name="dateenvoi" type="Dete" placeholder="dateenvoi" />
+                                <small *ngIf="FormGroupviewupd.get('dateenvoi')?.invalid"
+                                    class="text-danger"></small>
+                            </div>
+                        </div>
+                       
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-inner">
+                                <label>destinataire *</label>
+                                <input class="form-control" id="destinataire" required formControlName="destinataire"
+                                    name="destinataire" type="text" placeholder="dateajout" />
+                                <small *ngIf=" FormGroupviewupd.get('destinataire')?.invalid"
+                                    class="text-danger"></small>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-inner">
+                                <label>motscle *</label>
+                                <input class="form-control" id="motscle" required formControlName="motscle"
+                                    name="motscle" type="text" placeholder="motscle" />
+                                <small *ngIf=" FormGroupviewupd.get('motscle')?.invalid"
+                                    class="text-danger"></small>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-inner">
+                                <label>observation *</label>
+                                <textarea class="form-control" id="observation" required formControlName="observation"
+                                name="observation" type="text" placeholder="observation" >  </textarea>
+                                <small *ngIf=" FormGroupviewupd.get('observation')?.invalid"
+                                    class="text-danger"></small>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                        <hr>
+                        <pdf-viewer [src]="urldoc" [render-text]="true" [original-size]="false"
+                        style="width: 700px; height: 300px ;margin: auto;"></pdf-viewer>
+                    </div>
+
+                </form>
+
+
+
+
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+
+
+    <!-- Affichage de la liste des classes -->
+    <div class="row">
+
+        <table class="eg-table order-table table mb-0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>ref</th>
+                    <th>objet</th>
+                    <th>destinataire</th>
+                   <th>fichier electonique</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of classeList ">
+                    <td data-label="id ">{{item.id}} </td>
+                    <td data-label="titre">{{item.ref}}</td>
+                    <td data-label="objet ">{{item.objet}}</td>
+                    <td data-label="destinataire ">{{item.destinataire}}</td>
+                   
+                    <td data-label="Action">
+                        <button class="btn"><i class="fa fa-download"> </i> <a [href]="item.contenu">download</a></button>
+                        <button (click)="getbyidviewpdf(item.id)" class="btn btn-sm btn-success me-2 custom-width"
+                            data-bs-toggle="modal" data-bs-target="#exampleModalviewpdf">
+                            view doc
+                        </button>
+                        <button (click)="getclass(item.id)" class="btn btn-sm btn-success me-2 custom-width"
+                            data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">
+                            Details
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+    </div>
+
+
+    <!-- Modal modifier -->
+    <div class="modal fade" id="exampleModalviewpdf" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">courier depart </h5>
+                    
+                  
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <pdf-viewer [src]="urldoc" [render-text]="true"
+                    (after-load-complete)="onLoaded($event)"
+                    [original-size]="false"
+                        style="width: 800px; height: 700px ;margin: auto;"></pdf-viewer>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button (click)="print()" class="btn btn-sm btn-success" [disabled]="!isPdfLoaded">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

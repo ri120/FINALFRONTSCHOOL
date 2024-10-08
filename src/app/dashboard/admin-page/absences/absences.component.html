@@ -1,0 +1,58 @@
+<br><br><br>
+<h2 class="mb-4 text-center" style="color: #aa1780; font-size: 2rem;">Créer une Nouvelle Absence</h2>
+<br><br>
+<div class="container">
+    <form [formGroup]="idClasseForm"  class="p-4 rounded shadow bg-light"
+    style="border: 1px solid #aa1780;">
+     <div class="form-inner">
+    <label>classe *</label>
+    <select type="text" formControlName="classesid" name="classesid" (click)="getListEleveByClasse()"
+        class="form-control" id="classesid">
+        <option value=-1 disabled checked>selectionner</option>
+        <option *ngFor="let item of classeList" [value]="item.id">{{item.titre}}
+        </option>
+    </select>
+</div>
+    
+
+
+</form>
+   
+   
+    <form [formGroup]="absenceForm"  class="p-4 rounded shadow bg-light"
+        style="border: 1px solid #aa1780;">
+        <div class="form-group">
+            <label for="date" style="color: #aa1780; font-size: 1.2rem;">Date:</label>
+            <input type="date" id="date" class="form-control" formControlName="date">
+        </div>
+        <div class="form-group">
+            <label for="matiere" style="color: #aa1780; font-size: 1.2rem;">Matiere:</label>
+            <input type="text" id="matiere" class="form-control" formControlName="matiere">
+        </div>
+        <div class="form-inner">
+            <label>Eleve *</label>
+            <select type="text" formControlName="eleveID" name="eleveID" 
+                class="form-control" id="eleveID">
+                <option value=-1 disabled checked>selectionner</option>
+                <option *ngFor="let item of eleveListClasse" [value]="item.id">{{item.firstName}} {{item.lastName}}
+                </option>
+            </select>
+        </div>
+    
+        <div class="form-group">
+            
+
+            <p-multiSelect [options]="slotlist" formControlName="slotEmploiTempsId"
+                name="slotEmploiTempsId" defaultLabel="slotEmploiTempsId"
+                class="form-control"></p-multiSelect>
+
+        </div>
+        <button class="btn btn-primary btn-block"
+            style="background-color: #aa1780; border-color: #aa1780; font-size: 1.2rem;" (click)="saveAnsence()">Créer Absence</button>
+    </form>
+
+
+
+
+
+</div>

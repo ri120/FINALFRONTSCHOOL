@@ -1,0 +1,324 @@
+<div *ngIf="role == 'AdminSystem'">
+
+    <!-- classes.component.html -->
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Ajouter emploi
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter emploi de temps</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="FormGroupart">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Salle *</label>
+                                    <input class="form-control" id="salle" required formControlName="salle" name="salle"
+                                        type="text" placeholder="salle" />
+                                    <small *ngIf="submitted && FormGroupart.get('salle')?.invalid"
+                                        class="text-danger">Salle est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>anneescolair *</label>
+                                    <input class="form-control" id="anneescolair" required
+                                        formControlName="anneescolair" name="anneescolair" type="anneescolair"
+                                        placeholder="anneescolair" />
+                                    <small *ngIf="submitted && FormGroupart.get('anneescolair')?.invalid"
+                                        class="text-danger">annescolair est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>classe *</label>
+                                    <select type="text" formControlName="classesid" name="classesid"
+                                        class="form-control" id="classesid">
+                                        <option value=-1 disabled checked>selectionner</option>
+                                        <option *ngFor="let item of classeList" [value]="item.id">{{item.titre}}
+                                        </option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupart.get('id')?.invalid"
+                                        class="text-danger">classe est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Matiere *</label>
+                                    <select type="text" formControlName="matiereid" name="matiereid"
+                                        class="form-control" id="matiereid">
+                                        <option value=-1 disabled checked>selectionner</option>
+                                        <option *ngFor="let item of matiereList" [value]="item.idMatiere">
+                                            {{item.nomMatiere}}</option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupart.get('matiereid')?.invalid"
+                                        class="text-danger">Matiere est obligatoire</small>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Proffesseur *</label>
+                                    <select type="text" formControlName="professeurid" name="professeurid"
+                                        class="form-control" id="professeurid">
+                                        <option value=-1 disabled checked>selectionner</option>
+                                        <option *ngFor="let item of profList" [value]="item.id">{{item.firstName}}
+                                            {{item.lastName}} </option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupart.get('professeurid')?.invalid"
+                                        class="text-danger">Matiere est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p-multiSelect [options]="slotlist" formControlName="emploisTempsIds"
+                                    name="emploisTempsIds" defaultLabel="emploisTempsIds"
+                                    class="form-control"></p-multiSelect>
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button (click)=" addSeance()" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal modifier -->
+    <div class="modal fade" id="exampleModalmodifier" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modifier seance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="FormGroupviewupd">
+                        <div class="row">
+
+
+
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Salle *</label>
+                                    <input class="form-control" id="salle" required formControlName="salle" name="salle"
+                                        type="text" placeholder="salle" />
+                                    <small *ngIf="submitted && FormGroupviewupd.get('salle')?.invalid"
+                                        class="text-danger">Salle est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>anneescolair *</label>
+                                    <input class="form-control" id="anneescolair" required
+                                        formControlName="anneescolair" name="anneescolair" type="anneescolair"
+                                        placeholder="anneescolair" />
+                                    <small *ngIf="submitted && FormGroupviewupd.get('anneescolair')?.invalid"
+                                        class="text-danger">annescolair est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>classe *</label>
+                                    <select type="text" formControlName="classesid" name="classesid"
+                                        class="form-control" id="classesid">
+                                        <option value=-1 disabled checked>selectionner</option>
+                                        <option *ngFor="let item of classeList" [value]="item.id">{{item.titre}}
+                                        </option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupviewupd.get('id')?.invalid"
+                                        class="text-danger">classe est obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Matiere *</label>
+                                    <select type="text" formControlName="matiereid" name="matiereid"
+                                        class="form-control" id="matiereid">
+                                        <option value=-1 disabled checked>selectionner</option>
+                                        <option *ngFor="let item of matiereList" [value]="item.idMatiere">
+                                            {{item.nomMatiere}}</option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupviewupd.get('matiereid')?.invalid"
+                                        class="text-danger">Matiere est obligatoire</small>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="form-inner">
+                                    <label>Proffesseur: *</label>
+                                    <select type="text" formControlName="professeurid" name="professeurid"
+                                        class="form-control" id="professeurid">
+                                        <option value=-1 disabled checked>selectionner</option>
+                                        <option *ngFor="let item of profList" [value]="item.id">{{item.firstName}}
+                                            {{item.lastName}} </option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupviewupd.get('professeurid')?.invalid"
+                                        class="text-danger">Matiere est obligatoire</small>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+
+
+                                <p-multiSelect [options]="slotlist" formControlName="emploisTempsIds"
+                                    name="emploisTempsIds" defaultLabel="emploisTempsIds"
+                                    class="form-control"></p-multiSelect>
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button (click)="updateSeance()" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <h2>Liste des Emplois de temps</h2>
+
+        <!-- Affichage de la liste des classes -->
+        <div class="row">
+
+
+            <table class="eg-table order-table table mb-0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Salle</th>
+                        <th>Annee Scolaire</th>
+                        <th>Professeur</th>
+                        <th>Matiere</th>
+                        <th>Classe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of emploiTempsList ">
+                        <td data-label="id ">{{item.id}} </td>
+                        <td data-label="titre">{{item.salle}}</td>
+                        <td data-label="annescolair ">{{item.anneescolair}}</td>
+                        <td data-label="annescolair ">{{item.prof.firstName}}</td>
+                        <td data-label="annescolair ">{{item.matiere.nomMatiere}}</td>
+                        <td data-label="annescolair ">{{item.clasee.titre}}</td>
+                        <td data-label="Action">
+
+
+
+                            <!-- <button (click)="getclass(item.id)"    class="btn-info text-light ms-1"  data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">
+                            <i class="fas fa-edit"></i>
+                            <br>
+                        </button >
+                        <button (click)="deleteClasee(item.id)"   class="btn-danger text-light ms-1">
+                            <i class="fas fa-trash-alt"></i>
+                        </button > -->
+
+                            <div class="d-flex">
+                                <button class="btn btn-sm btn-danger me-2 custom-width"
+                                    (click)="deleteSeance(item.id)">Supprimer</button>
+                                <button class="btn btn-sm btn-success me-2 custom-width" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalmodifier" (click)="getbyid(item.id)">Modifier</button>
+
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+<div *ngIf="role == 'Parent' || role == 'Eleve' || role =='professeur'">
+    <form [formGroup]="FormGroupClass">
+        <div class="emploi-temps-container">
+            <h2>Emploi du Temps - Classe </h2>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="idclasse" class="form-label">Selectionner votre classe</label>
+                    <select formControlName="idclasse" name="idclasse" class="form-control" id="idclasse"
+                        (click)="recupeIdclasse()">
+                        <option value=-1 disabled checked>Selectionner</option>
+                        <option *ngFor="let mat of this.classeList" [value]="mat.id">{{mat.titre}}</option>
+                    </select>
+                    <small *ngIf="submitted && FormGroupClass.get('idclasse')?.invalid" class="text-danger"> Le classe
+                        est obligatoire</small>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Salle</th>
+                <th>Année scolaire</th>
+                <th>Matière</th>
+                <th>Professeur</th>
+                <th>Classe</th>
+                <th>Emplois du Temps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emploi of emploiEleve">
+                <td>{{ emploi.id }}</td>
+                <td>{{ emploi.salle }}</td>
+                <td>{{ emploi.anneescolair }}</td>
+                <td>{{ emploi.matiere.nomMatiere }}</td>
+                <td>{{ emploi.professeur.firstName }} {{ emploi.professeur.lastName }}</td>
+                <td>{{ emploi.classes.titre }}</td>
+                <td>
+                  <ul>
+                    <li *ngFor="let slot of emploi.emploisTemps">
+                      {{ slot.timestart }} - {{ slot.timeend }} ({{ slot.jour }})
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+           
+      
+    </div>
+</div>

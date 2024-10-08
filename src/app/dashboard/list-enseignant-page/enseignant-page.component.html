@@ -1,0 +1,416 @@
+<!-- classes.component.html -->
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Ajouter proffesseur
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un Professeur</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup]="profSignupForm" >
+              <div class="row">     
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                      <div class="form-inner">
+                          <label>Email *</label>
+                          <input
+                              class="form-control"
+                              id="email"
+                              required
+                              formControlName="email"
+                              name="email"
+                              type="email"
+                              placeholder="Email"/>
+                          <small *ngIf="submitted && profSignupForm.get('email')?.invalid" class="text-danger">Email est obligatoire</small>
+                      </div>
+                  </div>
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                      <div class="form-inner">
+                          <label>Mot de passe*</label>
+                          <input
+                              class="form-control"
+                              id="password"
+                              required
+                              formControlName="password"
+                              name="password"
+                              type="password"
+                              placeholder="Mot de passe"/>
+                          <small *ngIf="submitted && profSignupForm.get('password')?.invalid" class="text-danger">Mot de passe est obligatoire</small>
+                      </div>
+                  </div>
+  
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="form-inner">
+                        <label>Prénom*</label>
+                        <input
+                            class="form-control"
+                            id="firstName"
+                            required
+                            formControlName="firstName"
+                            name="firstName"
+                            type="text"
+                            placeholder="Prénom"/>
+                        <small *ngIf="submitted && profSignupForm.get('firstName')?.invalid" class="text-danger">Prénom est obligatoire</small>
+                    </div>
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                  <div class="form-inner">
+                      <label>Nom*</label>
+                      <input
+                          class="form-control"
+                          id="lastName"
+                          required
+                          formControlName="lastName"
+                          name="lastName"
+                          type="text"
+                          placeholder="Nom"/>
+                      <small *ngIf="submitted && profSignupForm.get('lastName')?.invalid" class="text-danger">Nom est obligatoire</small>
+                  </div>
+              </div>
+  
+              <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="form-inner">
+                    <label>Date Debut Travail*</label>
+                    <input
+                        class="form-control"
+                        id="dateDebutTravail"
+                        required
+                        formControlName="dateDebutTravail"
+                        name="dateDebutTravail"
+                        type="date"
+                        placeholder="date Debut Travail"/>
+                    <small *ngIf="submitted && profSignupForm.get('dateDebutTravail')?.invalid" class="text-danger">date de  Debut de Travail est obligatoire</small>
+                </div>
+            </div>
+
+
+
+            <div class="col-xl-12 col-lg-12 col-md-12">
+              <div class="form-inner">
+                  <label>Diplome*</label>
+                  <input
+                      class="form-control"
+                      id="diplome"
+                      required
+                      formControlName="diplome"
+                      name="diplome"
+                      type="text"
+                      placeholder="Diplome"/>
+                  <small *ngIf="submitted && profSignupForm.get('diplome')?.invalid" class="text-danger">Diplome est obligatoire</small>
+              </div>
+          </div>
+
+
+          <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="form-inner">
+                <label>cin*</label>
+                <input
+                    class="form-control"
+                    id="cin"
+                    required
+                    formControlName="cin"
+                    name="cin"
+                    type="text"
+                    placeholder="cin"/>
+                <small *ngIf="submitted && profSignupForm.get('cin')?.invalid" class="text-danger">cin est obligatoire</small>
+            </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12">
+          <div class="form-inner">
+              <label>Télephone*</label>
+              <input
+                  class="form-control"
+                  id="phone"
+                  required
+                  formControlName="phone"
+                  name="phone"
+                  type="text"
+                  placeholder="Télephone"/>
+              <small *ngIf="submitted && profSignupForm.get('phone')?.invalid" class="text-danger">Télephne est obligatoire</small>
+          </div>
+      </div>
+
+      <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="form-inner">
+            <label>Adresse*</label>
+            <input
+                class="form-control"
+                id="adress"
+                required
+                formControlName="adress"
+                name="adress"
+                type="text"
+                placeholder="adresse"/>
+            <small *ngIf="submitted && profSignupForm.get('adress')?.invalid" class="text-danger">Adresse est obligatoire</small>
+        </div>
+    </div>
+
+
+          </div>
+           
+          </form>
+
+
+
+        
+          
+          
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button (click)="updateClasse()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <button (click)="signUpprof()"  type="button" class="btn btn-primary">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal modifier -->
+<div class="modal fade" id="exampleModalmodifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier le Professeur</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+          <form [formGroup]="profSignupFormview" >
+            <div class="row">
+                   
+               
+              
+              
+               
+               
+              <div class="col-xl-12 col-lg-12 col-md-12">
+                  <div class="form-inner">
+                      <label>Email *</label>
+                      <input
+                          class="form-control"
+                          id="emaill"
+                          required
+                          formControlName="email"
+                          name="email"
+                          type="email"
+                          placeholder="email"/>
+                      <small *ngIf="submitted && profSignupFormview.get('email')?.invalid" class="text-danger">Email est obligatoire</small>
+                  </div>
+              </div>
+              <div class="col-xl-12 col-lg-12 col-md-12">
+                  <div class="form-inner">
+                      <label>mot de passe*</label>
+                      <input
+                          class="form-control"
+                          id="passwordl"
+                          required
+                          formControlName="password"
+                          name="password"
+                          type="password"
+                          placeholder="mot de passe"/>
+                      <small *ngIf="submitted && profSignupFormview.get('password')?.invalid" class="text-danger">mot de passe est obligatoire</small>
+                  </div>
+              </div>
+
+              <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="form-inner">
+                    <label>Prénom*</label>
+                    <input
+                        class="form-control"
+                        id="firstNamel"
+                        required
+                        formControlName="firstName"
+                        name="firstName"
+                        type="firstName"
+                        placeholder="Prénom"/>
+                    <small *ngIf="submitted && profSignupFormview.get('firstName')?.invalid" class="text-danger">Prénom est obligatoire</small>
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12">
+              <div class="form-inner">
+                  <label>Nom*</label>
+                  <input
+                      class="form-control"
+                      id="lastNamel"
+                      required
+                      formControlName="lastName"
+                      name="lastName"
+                      type="lastName"
+                      placeholder="Nom*"/>
+                  <small *ngIf="submitted && profSignupFormview.get('lastName')?.invalid" class="text-danger">Nom est obligatoire</small>
+              </div>
+          </div>
+
+          <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="form-inner">
+                <label>date Debut Travail*</label>
+                <input
+                    class="form-control"
+                    id="dateDebutTravaill"
+                    required
+                    formControlName="dateDebutTravail"
+                    name="dateDebutTravail"
+                    type="date"
+                    placeholder="date Debut Travail"/>
+                <small *ngIf="submitted && profSignupFormview.get('dateDebutTravail')?.invalid" class="text-danger">date de début de travail est obligatoire</small>
+            </div>
+        </div>
+
+
+
+        <div class="col-xl-12 col-lg-12 col-md-12">
+          <div class="form-inner">
+              <label>Diplome*</label>
+              <input
+                  class="form-control"
+                  id="diplomel"
+                  required
+                  formControlName="diplome"
+                  name="diplome"
+                  type="text"
+                  placeholder="Diplome"/>
+              <small *ngIf="submitted && profSignupFormview.get('diplome')?.invalid" class="text-danger">Diplome est obligatoire</small>
+          </div>
+      </div>
+
+
+      <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="form-inner">
+            <label>cin*</label>
+            <input
+                class="form-control"
+                id="cinl"
+                required
+                formControlName="cin"
+                name="cin"
+                type="text"
+                placeholder="cin"/>
+            <small *ngIf="submitted && profSignupFormview.get('cin')?.invalid" class="text-danger">cin est obligatoire</small>
+        </div>
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12">
+      <div class="form-inner">
+          <label>Télephone*</label>
+          <input
+              class="form-control"
+              id="phonel"
+              required
+              formControlName="phone"
+              name="phone"
+              type="text"
+              placeholder="Télephone"/>
+          <small *ngIf="submitted && profSignupFormview.get('phone')?.invalid" class="text-danger">Télephone est obligatoire</small>
+      </div>
+  </div>
+
+  <div class="col-xl-12 col-lg-12 col-md-12">
+    <div class="form-inner">
+        <label>Adresse*</label>
+        <input
+            class="form-control"
+            id="adressl"
+            required
+            formControlName="adress"
+            name="adress"
+            type="text"
+            placeholder="Adresse"/>
+        <small *ngIf="submitted && profSignupFormview.get('adress')?.invalid" class="text-danger">Adresse est obligatoire</small>
+    </div>
+</div>
+
+
+      </div>
+           
+          </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      <!--   <button (click)="updateClasse()"  type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-4">
+
+  <h2 class="mb-4 text-center text-primary" style="font-size: 2em">Liste des proffesseurs</h2>
+  <!-- Affichage de la liste des classes -->
+  <div class="row">
+   
+      <table class="eg-table order-table table mb-0">
+          <thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Prénom</th>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>Télephone</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of classeList " >
+                  <td data-label="id ">{{item.id}} </td>
+                  <td data-label="titre">{{item.firstName}}</td>
+                  <td data-label="annescolair ">{{item.lastName}}</td>
+                  <td data-label="annescolair ">{{item.email}}</td>
+                  <td data-label="annescolair ">{{item.phone}}</td>
+                  <td data-label="Action">        
+                      <!-- <button (click)="getclass(item.id)"    class="btn-info text-light ms-1"  data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">
+                          <i class="fas fa-edit"></i>
+                          <br>
+                      </button >
+                      <button (click)="deleteClasee(item.id)"   class="btn-danger text-light ms-1">
+                          <i class="fas fa-trash-alt"></i>
+                      </button > -->
+                      
+                      <button (click)="getProfById(item.id)"    class="btn btn-sm btn-success me-2 custom-width"  data-bs-toggle="modal" data-bs-target="#exampleModalmodifier">       
+                        Modifier
+                      </button >
+                      <button (click)="deleteProf(item.id)"  class="btn btn-sm btn-danger me-2 custom-width">
+                      Supprimer
+                      </button >
+                     
+                  </td>
+              </tr>
+         
+           
+             
+          </tbody>
+      </table>
+          <!-- <mat-card class="mb-3">
+              <mat-card-header>
+                  <mat-card-title>{{ classe.titre }}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                  <p>Année scolaire: {{ classe.annescolair }}</p>
+                  Ajoutez d'autres détails si nécessaire 
+                  <div class="btn-group">
+                      <button mat-raised-button color="primary" (click)="selectClass(classe)">Modifier</button>
+                      <button mat-raised-button color="warn" (click)="deleteClass(classe.id)">Supprimer</button>
+                  </div>
+              </mat-card-content>
+          </mat-card> -->
+      
+  </div>
+
+
+</div>

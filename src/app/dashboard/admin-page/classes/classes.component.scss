@@ -1,0 +1,8 @@
+.custom-width {
+    width: 90px; /* Vous pouvez ajuster cette valeur pour la largeur souhaitée */
+  }
+  .modal-dialog.custom-width {
+    max-width: 90%; /* Ajuster selon vos besoins */
+    width: auto;
+  }
+  

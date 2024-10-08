@@ -1,0 +1,171 @@
+<div class="container mt-5">
+    <div *ngIf="role == 'professeur'">
+    
+    <h2 class="mb-4 text-center text-primary" style="font-size: 2em;">Uploader un Fichier de Cours</h2>
+    <form [formGroup]="coursForm" (ngSubmit)="onSubmit()" class="p-4 rounded shadow bg-light border border-primary">
+        <div class="form-group">
+            <label for="titre" class="text-primary" style="font-size: 1.2em;">Titre du Cours :*</label>
+            <input type="text" id="titre" class="form-control" formControlName="titre" required>
+            <small *ngIf="submitted && coursForm.get('id')?.invalid" class="text-danger">Titre est obligatoire</small>
+        </div>
+        <div class="form-group">
+            <label for="urlcours" class="text-primary" style="font-size: 1.2em;">Url du Cours :*</label>
+            <input type="text" id="urlcours" class="form-control" formControlName="urlcours" required>
+            <small *ngIf="submitted && coursForm.get('id')?.invalid" class="text-danger">Url est obligatoire</small>
+        </div>
+        <div class="form-group">        
+            <p-multiSelect [options]="classeList" formControlName="classesIds" 
+              name="classesIds" defaultLabel="classe" class="form-control"></p-multiSelect>
+          </div>
+       
+          <div class="form-inner">
+            <label for="matiereId" class="text-primary" style="font-size: 1.2em;">Matiere:*</label>
+            <select type="text" formControlName="matiereId" name="matiereId" class="form-control"
+                id="matiereId">
+                <option value=-1 disabled checked>selectionner</option>
+                <option *ngFor="let item of matiereList" [value]="item.idMatiere">
+                    {{item.nomMatiere}}</option>
+            </select>
+            <small *ngIf="submitted && devoirForm.get('matiereId')?.invalid"
+                class="text-danger">matiere est obligatoire</small>
+        </div>
+        <div class="form-inner">
+            <label for="professeurId" class="text-primary" style="font-size: 1.2em;">professeur:*</label>
+            <select 
+            type="text" 
+            formControlName="professeurId"
+            name="professeurId"
+            class="form-control"
+             id="professeurId" >
+                <option value=-1 disabled checked>selectionner</option>
+                <option *ngFor="let item of profList" [value]="item.id">{{item.firstName}}</option>
+              </select>
+            <small *ngIf="submitted && coursForm.get('id')?.invalid" class="text-danger">Professeur est obligatoire</small>
+        </div>
+     
+        <div class="form-group row mb-3 justify-content-center">
+            <button (click)="fileInput.click()" style="background-color: transparent; border: none;">
+                <img (error)="changeSource($event)" [src]="imgUrl" class="rounded-circle" width="100px" height="100px" />
+                <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)" formControlName="filecours" name="filecours">
+            </button>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary btn-block"
+            style="background-color: #e05a29; border-color: #e05a29; font-size: 1.2em;" (click)="saveCours()">Uploader</button>
+    </form>
+</div>
+<div>
+
+<!-- 
+    <h2 class="mt-5 mb-4 text-center text-primary" style="font-size: 2em;">Cours Uploadés</h2>
+    <div class="row">
+        <div class="col-md-4"  *ngFor="let cours of coursList">
+            <mat-card class="mb-3" style="height: 200px;">
+                <mat-card-header>
+                    <mat-card-title>{{ cours.titre }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{ cours.description }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <a mat-button color="primary" [href]="cours.urlcours" target="_blank">Voir le PDF</a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div> -->
+ 
+
+<!-- CARD CARD -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form [formGroup]="FormGroupClassMatiere">
+                        <div class="row gy-4">
+                            <!-- Classe Select -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="idclasse" class="form-label">Classe *</label>
+                                    <select formControlName="idclasse" name="idclasse" class="form-control" id="idclasse" (click)="recupeIdclasseIdmatiere()">
+                                        <option value=-1 disabled checked>Selectionner</option>
+                                        <option *ngFor="let classt of this.classeListt" [value]="classt.id">{{classt.titre}}</option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupClassMatiere.get('idclasse')?.invalid" class="text-danger">La classe est obligatoire</small>
+                                </div>
+                            </div>
+
+                            <!-- Matiere Select -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="idMatiere" class="form-label">Matière *</label>
+                                    <select formControlName="idMatiere" name="idMatiere" class="form-control" id="idMatiere" (click)="recupeIdclasseIdmatiere()">
+                                        <option value=-1 disabled checked>Selectionner</option>
+                                        <option *ngFor="let mat of this.matiereList" [value]="mat.idMatiere">{{mat.nomMatiere}}</option>
+                                    </select>
+                                    <small *ngIf="submitted && FormGroupClassMatiere.get('idMatiere')?.invalid" class="text-danger">La matière est obligatoire</small>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!-- CARD CARD -->
+ <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <!-- Titre du cadre -->
+                    <h3 class="text-center text-primary mb-4">Liste de cours</h3>
+
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-6">
+                            <!-- Place for future content -->
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Another place for content if needed -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Parcourir les devoirs et les afficher dans des cartes stylées -->
+                        <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let cour of coursListt">
+                            <div class="card h-100 border-primary">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-1 ms-3">
+                                            <h5 class="font-size-16 mb-1">
+                                                <a href="#" class="text-dark">{{cour.titre}}</a>
+                                            </h5>
+                                            <span class="badge badge-soft-success mb-0">Full Stack Developer</span>
+                                        </div>
+                                    </div>
+                                 
+                                    <div class="d-flex gap-2 pt-4">
+                                        <!-- <button type="button" class="btn btn-primary btn-sm w-100" (click)="getbyidviewpdf(dev.idDevoir)"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModalviewpdf">
+                                            <i class="mdi mdi-application-import" 
+                                             ></i> Voir le PDF
+                                        </button> -->
+                                        <button class="btn"><i class="fa fa-download"> </i> <a [href]="cour.tache">download</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- Fin du row des devoirs -->
+                    
+                </div> <!-- Fin du card-body -->
+            </div> <!-- Fin du card principal -->
+        </div> <!-- Fin de la colonne principale -->
+    </div> <!-- Fin du row principal -->
+</div> <!-- Fin du container -->
+
+
+</div>

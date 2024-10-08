@@ -1,0 +1,235 @@
+<div class="signup-bg position-fixed top-0 start-0 end-0 bottom-0"
+	style="background-image: url(assets/images/gallery/signup-bg.png);">
+</div>
+
+
+<div class="container mt-1">
+
+    <div class="row g-4">
+        <div class="col-12 col-xl-5 mx-auto">
+             
+          <mat-card class="rounded-4">
+              <mat-card-content class="p-5">
+                <div class="text-center">
+                  <img style="margin-top: -30px;" src="../../../assets/images/logo/mastergo.png"
+                  width="300" height="180" alt="">
+                  <h4 class="mb-2" style="margin-top: -50px;">Créer un compte</h4>
+                    <p class="mb-2">Veuillez remplir les informations ci-dessous pour créer votre compte</p>
+                    <form [formGroup]="myForm" >
+
+                      <mat-radio-group aria-label="Select an option" formControlName="sType"  class="gap-4 d-flex justify-content-center mb-2">
+                        <mat-radio-button *ngFor="let sfType of scheduleTypes" [value]="sfType">{{sfType}}</mat-radio-button>
+                      </mat-radio-group>
+                    </form>
+                    <div *ngIf="messageErr && studentSignupForm.get('email').touched" class="alert alert-danger d-flex align-items-center"  role="alert">
+                      <mat-icon class="pe-3">warning</mat-icon>{{messageErr}}
+                      </div>
+                    <div *ngIf="messageSuc && studentSignupForm.get('email').touched" class="alert alert alert-success d-flex align-items-center"  role="alert">
+                      <mat-icon class="pe-3">check</mat-icon>{{messageSuc}}
+                      </div>
+                      <div *ngIf="messageErr && parentSignupForm.get('email').touched" class="alert alert-danger d-flex align-items-center"  role="alert">
+                        <mat-icon class="pe-3">warning</mat-icon>{{messageErr}}
+                        </div>
+                      <div *ngIf="messageSuc && parentSignupForm.get('email').touched" class="alert alert alert-success d-flex align-items-center"  role="alert">
+                        <mat-icon class="pe-3">check</mat-icon>{{messageSuc}}
+                        </div>
+                </div>
+
+                <ng-container [ngSwitch]="getScheduleType()">
+                <!-- Student Form STart -->
+                  <form [formGroup]="studentSignupForm" (ngSubmit)="signUpStudent()" class="row g-1" *ngSwitchCase="'Eleve'">
+                     <div class="col-6 col-md-6">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Nom <span>*</span></mat-label>
+                            <input matInput placeholder="Ex. @jhon" formControlName="firstName">
+                            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                          </mat-form-field>
+                          <p  *ngIf="studentSignupForm.get('firstName').invalid && studentSignupForm.get('firstName').touched" class="message-erreur">
+                            *champ Vide 
+                            </p>
+                      </div> 
+                      <div class="col-6 col-md-6">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Prenom <span>*</span></mat-label>
+                            <input matInput placeholder="Ex. @jhon" formControlName="lastName">
+                            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                          </mat-form-field>
+                          <p  *ngIf="studentSignupForm.get('lastName').invalid && studentSignupForm.get('lastName').touched" class="message-erreur">
+                            *champ Vide 
+                            </p>
+                      </div> 
+                      <div class="col-12 col-md-12">
+                          <mat-form-field class="w-100" appearance="outline">
+                              <mat-label>Email *</mat-label>
+                              <input matInput placeholder="Ex. xyz@.com" formControlName="email">
+                              <mat-icon matSuffix>email</mat-icon>
+                            </mat-form-field>
+                            <p  *ngIf="studentSignupForm.get('email').invalid && studentSignupForm.get('email').touched" class="message-erreur">
+                              *Veuillez saisir votre email
+                              </p>
+                      </div>  
+                      <div class="col-12 col-md-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Date de naissance *</mat-label>
+                          <input matInput [matDatepicker]="picker" formControlName="dob">
+                          <mat-hint>YYYY-MM-dd</mat-hint>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <p *ngIf="studentSignupForm.get('dob').invalid && studentSignupForm.get('dob').touched" style="margin-top: 2px;" class="message-erreur">
+                          *Veuillez saisir votre date de naissance
+                        </p>
+                      </div>
+                      <div class="col-12 col-md-12 mt-3">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Numéro de téléphone *</mat-label>
+                            <input matInput placeholder="Ex. xyz@.com" formControlName="phone" [type]="number">
+                            <mat-icon matSuffix>phone</mat-icon>
+                          </mat-form-field>
+                          <p  *ngIf="studentSignupForm.get('phone').invalid && studentSignupForm.get('phone').touched" class="message-erreur">
+                            *Veuillez saisir votre numéro de telephone
+                            </p>
+                    </div> 
+                      <div class="col-12 col-md-12">
+                          <mat-form-field class="w-100" appearance="outline">
+                              <mat-label>Mot de passe *</mat-label>
+                              <input matInput placeholder="Ex. @#45gh" formControlName="password" [type]="hide ? 'password' : 'text'">
+                              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </button>
+                            </mat-form-field>
+                            <p  *ngIf="studentSignupForm.get('password').invalid && studentSignupForm.get('password').touched" class="message-erreur">
+                              *Veuillez saisir votre mot de passe
+                              </p>
+                      </div>  
+
+                      <div class="form-inner mb-3">
+                        <label>Niveau Scolaire:*</label>
+                        <select 
+                        type="text" 
+                        formControlName="niveauScolaire"
+                        name="niveauScolaire"
+                        class="form-control"
+                         id="niveauScolaire" >
+                            <option value=-1 disabled checked>selectionner</option>
+                            <option *ngFor="let item of niveauScolaires" [value]="item">{{item}}</option>
+                          </select>
+                          <p  *ngIf="studentSignupForm.get('niveauScolaire').invalid && studentSignupForm.get('niveauScolaire').touched" class="message-erreur">
+                            *Veuillez choisir votre niveau scolaire 
+                            </p>
+                    </div>
+
+          
+
+                      <div class="col-12 col-md-12">
+                          <div class="d-grid">
+                              <button mat-flat-button color="primary" class="px-4" [disabled]="creatingSignup">
+                              <ng-container *ngIf="!creatingSignup">Créer un compte</ng-container>
+                              <span
+                              class="spinner-border spinner-border-sm"
+                              *ngIf="creatingSignup" ></span>
+                              </button>
+                          </div>
+                      </div>
+                      <div class="col-12 col-md-12 mt-4">
+                        <div class="text-center gap-3">
+                            <p>Avez vous déjà un compte ?  <a routerLink="../sign-in" style="cursor: pointer; color: #1414f8;">Se connecter </a></p>
+                        </div>
+                      </div>
+                    
+    
+                  </form><!--end row-->
+
+                  <!-- Student Form End -->
+
+                  <!-- Parent Form Start  -->
+                  <form [formGroup]="parentSignupForm" (ngSubmit)="signUpParent()" class="row g-1" *ngSwitchCase="'Parent'">
+                    <div class="col-6 col-md-6">
+                       <mat-form-field class="w-100" appearance="outline">
+                           <mat-label>Nom <span>*</span></mat-label>
+                           <input matInput placeholder="Ex. @jhon" formControlName="firstName">
+                           <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                         </mat-form-field>
+                         <p  *ngIf="parentSignupForm.get('firstName').invalid && parentSignupForm.get('firstName').touched" class="message-erreur">
+                          *champ Vide 
+                          </p>
+                     </div> 
+                     <div class="col-6 col-md-6">
+                       <mat-form-field class="w-100" appearance="outline">
+                           <mat-label>Prenom <span>*</span></mat-label>
+                           <input matInput placeholder="Ex. @jhon" formControlName="lastName">
+                           <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                         </mat-form-field>
+                         <p  *ngIf="parentSignupForm.get('lastName').invalid && parentSignupForm.get('lastName').touched" class="message-erreur">
+                          *champ Vide 
+                          </p>
+                     </div> 
+                     <div class="col-12 col-md-12">
+                         <mat-form-field class="w-100" appearance="outline">
+                             <mat-label>Email *</mat-label>
+                             <input matInput placeholder="Ex. xyz@.com" formControlName="email">
+                             <mat-icon matSuffix>email</mat-icon>
+                           </mat-form-field>
+                           <p  *ngIf="parentSignupForm.get('email').invalid && parentSignupForm.get('email').touched" class="message-erreur">
+                            *Veuillez saisir votre email
+                            </p>
+                     </div>  
+                     <div class="col-12 col-md-12">
+                       <mat-form-field class="w-100" appearance="outline">
+                           <mat-label>Numéro de téléphone *</mat-label>
+                           <input matInput placeholder="Ex. xyz@.com" formControlName="phone">
+                           <mat-icon matSuffix>phone</mat-icon>
+                         </mat-form-field>
+                         <p  *ngIf="parentSignupForm.get('phone').invalid && parentSignupForm.get('phone').touched" class="message-erreur">
+                          *Veuillez saisir votre numéro de telephone
+                          </p>
+                   </div> 
+                     <div class="col-12 col-md-12">
+                         <mat-form-field class="w-100" appearance="outline">
+                             <mat-label>Mot de passe *</mat-label>
+                             <input matInput placeholder="Ex. @#45gh" formControlName="password" [type]="hide ? 'password' : 'text'">
+                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                             </button>
+                           </mat-form-field>
+                           <p  *ngIf="parentSignupForm.get('password').invalid && parentSignupForm.get('password').touched" class="message-erreur">
+                            *Veuillez saisir votre mot de passe
+                            </p>
+                     </div>  
+                     
+            
+         
+
+                     <!-- <div class="col-12 col-md-12">
+                         <div class="d-grid">
+                             <button mat-flat-button color="primary" class="px-4" [disabled]="submitted">Créer un compte</button>
+                         </div>
+                     </div>  -->
+                     <div class="col-12 col-md-12">
+                      <div class="d-grid">
+                          <button mat-flat-button color="primary" class="px-4" [disabled]="creatingSignup">
+                          <ng-container *ngIf="!creatingSignup">Créer un compte</ng-container>
+                          <span
+                          class="spinner-border spinner-border-sm"
+                          *ngIf="creatingSignup" ></span>
+                          </button>
+                      </div>
+                  </div>
+                     <div class="col-12 col-md-12 mt-4">
+                       <div class="text-center gap-3">
+                           <p>Avez vous déjà un compte ?  <a routerLink="../sign-in" style="cursor: pointer; color: #1414f8;">Se connecter </a></p>
+                       </div>
+                     </div>
+                   
+   
+                 </form><!--end row-->
+                 <!-- Parent Form Start  -->
+    
+                </ng-container>
+              </mat-card-content>
+          </mat-card>
+      
+        </div>
+    </div><!--end row-->
+    
+    </div>

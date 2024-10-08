@@ -1,0 +1,16 @@
+.custom-width {
+    width: 90px; /* Vous pouvez ajuster cette valeur pour la largeur souhaitée */
+  }
+
+  .card1 {
+    min-height: 70px; /* Ajustez cette valeur en fonction de vos besoins */
+}
+.card2 {
+  min-height: 100px; /* Ajustez cette valeur en fonction de vos besoins */
+}
+
+.table {
+    height: 100%; /* Fait en sorte que la table occupe tout l'espace */
+    width: 100%;
+    table-layout: fixed; /* Fixe la largeur des colonnes */
+}

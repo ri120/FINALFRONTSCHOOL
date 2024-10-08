@@ -1,0 +1,146 @@
+<div class="container mt-1">
+  <h2 class="mb-4 text-center"
+      style="font-size: 36px; font-weight: 600; color: #147c20; text-transform: uppercase; letter-spacing: 1px;">
+      Gestion des Élèves
+  </h2>
+  
+   <!-- <div class="form-inner mb-3"    style="margin-left: 23cm;">
+      <select id="level-select" (change)="getStudentByNiv($event)">
+        <option *ngFor="let level of niveauScolaires" [value]="level">{{ level }}</option>
+      </select>
+  </div> -->
+  <div style="display: flex; justify-content: flex-end; margin: 20px;">
+    <option value=-1 disabled checked>selectionner</option>
+      <select class="form-select" aria-label="Default select example" id="level-select" (change)="getStudentByNiv($event)"  style="margin-left: 23cm;">
+          <option *ngFor="let level of niveauScolaires" [value]="level" [selected]="selected==level">{{ level }}</option>
+        </select>
+     </div>
+
+  <!-- <div class="input-group mb-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Recherche..." 
+        [(ngModel)]="recherche">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="applyFilter()">Recherche</button>
+      </div>=
+    </div>
+    <br> -->
+  <!-- Tableau pour afficher les slots d'emplois du temps -->
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Email</th>
+              <th scope="col">Tél</th>
+              <th scope="col">Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of ElevesClasses ">
+              <td>{{ item.id}}</td>
+              <td>{{ item.firstName }}</td>
+              <td>{{ item.lastName }}</td>
+              <td>{{ item.email}}</td>
+              <td>{{ item.phone }}</td>
+              <td >
+                  <div class="d-flex">
+                      <button class="btn btn-sm btn-danger me-2 custom-width" (click)="deleteEleve(item.id)" *ngIf ="item.statutPaiement=='non paye'">Supprimer</button>
+                      <!-- <button class="btn btn-sm btn-success me-2 custom-width" (click)="editSlot(slot.id)">Modifier</button> -->
+                      <button class="btn btn-sm btn-info custom-width" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getId(item.id)" [disabled]="item.statutPaiement=='paye'">{{item.statutPaiement}} </button>
+                      
+                    </div>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
+  <!-- Formulaire pour créer un nouveau slot d'emploi du temps -->
+ 
+
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter paiement </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+          <form [formGroup]="FormGroupviewupd" >
+              <div class="row">
+                   
+                 
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                      <div class="form-inner">
+                          <label>Mode de paiement: *</label>
+                          <input
+                              class="form-control"
+                              id="modepaiement"
+                              required
+                              formControlName="modepaiement"
+                              name="modepaiement"
+                              type="text"
+                              placeholder="mode de paiement"/>
+                          <small *ngIf="submitted && FormGroupviewupd.get('modepaiement')?.invalid" class="text-danger">le mode est obligatoire</small>
+                      </div>
+                  </div>
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                      <div class="form-inner">
+                          <label>Date d'opération: *</label>
+                          <input
+                              class="form-control"
+                              id="operation"
+                              required
+                              formControlName="operation"
+                              name="operation"
+                              type="date"
+                              placeholder="Date d'opération"/>
+                          <small *ngIf="submitted && FormGroupviewupd.get('operation')?.invalid" class="text-danger">la datescolaire est obligatoire</small>
+                      </div>
+                  </div>
+  
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                      <div class="form-inner">
+                          <label>Montant: *</label>
+                          <input
+                              class="form-control"
+                              id="montant"
+                              required
+                              formControlName="montant"
+                              name="montant"
+                              type="text"
+                              placeholder="montant"/>
+                          <small *ngIf="submitted && FormGroupviewupd.get('montant')?.invalid" class="text-danger">le montant est obligatoire</small>
+                      </div>
+                  </div>
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="form-inner">
+                        <label>Parent:</label>
+                        {{nomParent}}
+                        
+                    </div>
+                </div>
+               
+  
+              
+          </div>
+           
+          </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button  type="button" class="btn btn-primary" (click)="addReglemet()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
